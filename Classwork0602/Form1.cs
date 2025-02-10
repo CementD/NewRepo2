@@ -78,7 +78,7 @@
             attemptCount = 0;
             lblTotalAttempts.Text = $"Спроби: {attemptCount}";
             currentQuestionIndex++;
-
+            MessageBox.Show("Правильно!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (currentQuestionIndex < totalQuestions)
             {
                 ShowNextQuestion();
