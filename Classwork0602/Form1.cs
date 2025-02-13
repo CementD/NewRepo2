@@ -2,6 +2,9 @@
 {
     public partial class Form1 : Form
     {
+        private bool isDragging = false;
+        private Point startPoint;
+        private Control currentControl;
         private string[,] questions = new string[,]
         {
             { "Столиця Франції?", "Париж" },
@@ -23,6 +26,14 @@
             InitializeComponent();
             totalQuestions = questions.GetLength(0);
             ShowNextQuestion();
+            RegisterDragEvents(lblTitel);
+            RegisterDragEvents(lblQuestion);
+            RegisterDragEvents(txtAnswer);
+            RegisterDragEvents(btnCheck);
+            RegisterDragEvents(lblResult);
+            RegisterDragEvents(lblScore);
+            RegisterDragEvents(lblTotalAttempts);
+            RegisterDragEvents(btnRestart);
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
@@ -134,6 +145,44 @@
             if (res == DialogResult.No)
             {
                 e.Cancel = true;
+            }
+        }
+        private void RegisterDragEvents(Control control)
+        {
+            control.MouseDown += Form1_MouseDown;
+            control.MouseMove += Form1_MouseMove;
+            control.MouseUp += Form1_MouseUp;
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                isDragging = true;
+                currentControl = sender as Control;
+                startPoint = e.Location;
+                Cursor = Cursors.Hand;
+            }
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging && currentControl != null)
+            {
+                Point newLocation = currentControl.Location;
+                newLocation.X += e.X - startPoint.X;
+                newLocation.Y += e.Y - startPoint.Y;
+                currentControl.Location = newLocation;
+            }
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                isDragging = false;
+                currentControl = null;
+                Cursor = Cursors.Default;
             }
         }
     }

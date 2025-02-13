@@ -134,6 +134,9 @@
             Name = "Form1";
             Text = "Form1";
             FormClosing += Form1_FormClosing;
+            MouseDown += Form1_MouseDown;
+            MouseMove += Form1_MouseMove;
+            MouseUp += Form1_MouseUp;
             ResumeLayout(false);
             PerformLayout();
         }
