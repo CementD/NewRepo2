@@ -89,7 +89,7 @@
             attemptCount = 0;
             lblTotalAttempts.Text = $"Спроби: {attemptCount}";
             currentQuestionIndex++;
-
+            
             if (currentQuestionIndex < totalQuestions)
             {
                 ShowNextQuestion();
